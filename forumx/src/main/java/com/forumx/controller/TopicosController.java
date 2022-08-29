@@ -6,18 +6,23 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.forumx.config.validacao.ErroDeFormulario;
 import com.forumx.controller.dto.DetalhesDoTopicoDto;
 import com.forumx.controller.dto.TopicoDto;
+import com.forumx.controller.form.AtualizacaoTopicoForm;
 import com.forumx.controller.form.TopicoForm;
 import com.forumx.modelo.Topico;
 import com.forumx.repository.CursoRepository;
@@ -55,11 +60,25 @@ public class TopicosController {
 	}
 
 	@GetMapping("/{id}")
-	public DetalhesDoTopicoDto detalhar(@PathVariable Long id) {
+	public ResponseEntity<?> detalhar(@PathVariable Long id) {
 
 		Topico topico = topicoRepository.getTopicoById(id);
 
-		return new DetalhesDoTopicoDto(topico);
+		if (topico == null) {
+
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErroDeFormulario("Código " + id, "Não encontrado"));
+
+		}
+		return ResponseEntity.ok(new DetalhesDoTopicoDto(topico));
+
+	}
+
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm form) {
+		Topico topico = form.atualizar(id, topicoRepository);
+
+		return ResponseEntity.ok(new TopicoDto(topico));
 	}
 
 }
