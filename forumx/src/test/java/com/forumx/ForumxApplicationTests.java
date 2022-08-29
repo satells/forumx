@@ -1,10 +1,10 @@
 package com.forumx;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class ForumxApplicationTests {
+import com.forumx.base.BaseTest;
+
+class ForumxApplicationTests extends BaseTest {
 
 	@Test
 	void contextLoads() {

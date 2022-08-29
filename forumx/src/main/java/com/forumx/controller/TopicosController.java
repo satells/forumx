@@ -54,7 +54,7 @@ public class TopicosController {
 		return bodyBuilder.body(new TopicoDto(topico));
 	}
 
-	@GetMapping(path = "/{id}")
+	@GetMapping("/{id}")
 	public DetalhesDoTopicoDto detalhar(@PathVariable Long id) {
 		System.out.println(id);
 
