@@ -6,7 +6,6 @@ public class ErroDeFormulario {
 	private String erro;
 
 	public ErroDeFormulario(String campo, String erro) {
-		super();
 		this.campo = campo;
 		this.erro = erro;
 	}

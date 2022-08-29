@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -36,6 +37,16 @@ class TopicosControllerTest extends BaseTest {
 				.andExpect(status().is2xxSuccessful())
 
 				.andExpect(content().contentType("application/json"))
+
+				.andExpect(jsonPath("$", Matchers.notNullValue()))
+
+				.andExpect(jsonPath("$[0].id", Matchers.notNullValue()))
+
+				.andExpect(jsonPath("$[0].titulo", is("Dúvida")))
+
+				.andExpect(jsonPath("$[0].mensagem", is("Erro ao criar projeto")))
+
+				.andExpect(jsonPath("$[0].dataCriacao", notNullValue()))
 
 		;
 	}
@@ -105,6 +116,44 @@ class TopicosControllerTest extends BaseTest {
 				.andExpect(jsonPath("$[0].campo", is("titulo")))
 
 				.andExpect(jsonPath("$[0].erro", is("Mínimo de 5 caracteres")))
+
+		;
+
+	}
+
+	@Test
+	public void test_get_detalhar() throws Exception {
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+
+				.get("/topicos/{id}", 1)
+
+				.accept("application/json;charset=UTF-8")
+
+				.contentType("application/json;charset=UTF-8")
+
+		;
+
+		mockMvc.perform(requestBuilder)
+
+				.andExpect(status().isOk())
+
+				.andExpect(content().contentType("application/json;charset=UTF-8"))
+
+				.andExpect(jsonPath("$", notNullValue()))
+
+				.andExpect(jsonPath("$.id", is(1)))
+
+				.andExpect(jsonPath("$.titulo", is("Dúvida")))
+
+				.andExpect(jsonPath("$.mensagem", is("Erro ao criar projeto")))
+
+				.andExpect(jsonPath("$.dataCriacao", notNullValue()))
+
+				.andExpect(jsonPath("$.nomeAutor", is("Aluno")))
+
+				.andExpect(jsonPath("$.status", is("NAO_RESPONDIDO")))
+
+				.andExpect(jsonPath("$.respostas", notNullValue()))
 
 		;
 
