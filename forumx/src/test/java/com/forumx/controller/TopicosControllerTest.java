@@ -28,16 +28,12 @@ class TopicosControllerTest extends BaseTest {
 
 				.accept("application/json;charset=UTF-8")
 
-				.contentType("application/json;charset=UTF-8");
-
 		;
 		MockHttpServletRequestBuilder requestBuilderComParametro = MockMvcRequestBuilders
 
 				.get("/topicos?nomeCurso=S")
 
 				.accept("application/json;charset=UTF-8")
-
-				.contentType("application/json;charset=UTF-8");
 
 		;
 
@@ -85,11 +81,11 @@ class TopicosControllerTest extends BaseTest {
 
 				.post("/topicos")
 
-				.accept("application/json;charset=UTF-8")
+				.accept("application/json")
 
 				.content(topico)
 
-				.contentType("application/json;charset=UTF-8");
+				.contentType("application/json");
 
 		mockMvc.perform(requestBuilder)
 
@@ -120,13 +116,13 @@ class TopicosControllerTest extends BaseTest {
 
 				.post("/topicos")
 
-				.accept("application/json;charset=UTF-8")
+				.accept("application/json")
 
 				.header("Accept-Language", "pt-BR")
 
 				.content(topico)
 
-				.contentType("application/json;charset=UTF-8");
+				.contentType("application/json");
 
 		;
 
@@ -160,10 +156,6 @@ class TopicosControllerTest extends BaseTest {
 		MockHttpServletRequestBuilder requestBuilderNaoEncontrado = MockMvcRequestBuilders
 
 				.get("/topicos/{id}", -1)
-
-				.accept("application/json;charset=UTF-8")
-
-				.contentType("application/json;charset=UTF-8")
 
 		;
 
@@ -215,9 +207,9 @@ class TopicosControllerTest extends BaseTest {
 
 				.put("/topicos/{id}", 3)
 
-				.accept("application/json;charset=UTF-8")
+				.accept("application/json")
 
-				.contentType("application/json;charset=UTF-8")
+				.contentType("application/json")
 
 				.content(atualizarTopico)
 
@@ -239,9 +231,9 @@ class TopicosControllerTest extends BaseTest {
 
 				.get("/topicos/{id}", 3)
 
-				.accept("application/json;charset=UTF-8")
+				.accept("application/json")
 
-				.contentType("application/json;charset=UTF-8")
+				.contentType("application/json")
 
 		;
 

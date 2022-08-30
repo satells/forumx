@@ -43,7 +43,14 @@ public class TopicosController {
 		if (nomeCurso == null) {
 			return TopicoDto.converter(topicoRepository.findAll());
 		}
-		return TopicoDto.converter(topicoRepository.findByCursoNomeStartingWithIgnoreCase(nomeCurso));
+
+		List<Topico> lista = topicoRepository.findByCursoNomeStartingWithIgnoreCase(nomeCurso);
+
+		for (Topico topico : lista) {
+			System.out.println(topico.getTitulo());
+		}
+
+		return TopicoDto.converter(lista);
 	}
 
 	@PostMapping
@@ -66,7 +73,7 @@ public class TopicosController {
 
 		if (topico == null) {
 
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErroDeFormulario("Código " + id, "Não encontrado"));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).header("Content-Type", "application/json;charset=UTF-8").body(new ErroDeFormulario("Código " + id, "Não encontrado"));
 
 		}
 		return ResponseEntity.ok(new DetalhesDoTopicoDto(topico));
