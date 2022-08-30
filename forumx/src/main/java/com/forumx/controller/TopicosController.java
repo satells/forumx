@@ -46,13 +46,19 @@ public class TopicosController {
 			return TopicoDto.converter(topicoRepository.findAll());
 		}
 
-		List<Topico> lista = topicoRepository.findByCursoNomeStartingWithIgnoreCase(nomeCurso);
+		return TopicoDto.converter(topicoRepository.findByCursoNomeStartingWithIgnoreCase(nomeCurso));
+	}
 
-		for (Topico topico : lista) {
-			System.out.println(topico.getTitulo());
+	@GetMapping("/{id}")
+	public ResponseEntity<?> detalhar(@PathVariable Long id) {
+		Optional<Topico> topico = topicoRepository.findById(id);
+
+		if (topico.isPresent()) {
+
+			return ResponseEntity.ok(new DetalhesDoTopicoDto(topico.get()));
+
 		}
-
-		return TopicoDto.converter(lista);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErroDeFormulario("Código " + id, "Não encontrado"));
 	}
 
 	@PostMapping
@@ -67,18 +73,6 @@ public class TopicosController {
 		BodyBuilder bodyBuilder = ResponseEntity.created(uri);
 
 		return bodyBuilder.body(new TopicoDto(topico));
-	}
-
-	@GetMapping("/{id}")
-	public ResponseEntity<?> detalhar(@PathVariable Long id) {
-		Optional<Topico> topico = topicoRepository.findById(id);
-
-		if (topico.isPresent()) {
-
-			return ResponseEntity.ok(new DetalhesDoTopicoDto(topico.get()));
-
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErroDeFormulario("Código " + id, "Não encontrado"));
 	}
 
 	@PutMapping("/{id}")
