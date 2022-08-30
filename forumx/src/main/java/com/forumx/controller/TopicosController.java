@@ -39,11 +39,11 @@ public class TopicosController {
 	private CursoRepository cursoRepository;
 
 	@GetMapping
-	public List<TopicoDto> lista() {
-//		List<Topico> topicos = topicoRepository.findByCursoNomeStartingWithIgnoreCase("Spring");
-		List<Topico> topicos = topicoRepository.findAll();
-
-		return TopicoDto.converter(topicos);
+	public List<TopicoDto> lista(String nomeCurso) {
+		if (nomeCurso == null) {
+			return TopicoDto.converter(topicoRepository.findAll());
+		}
+		return TopicoDto.converter(topicoRepository.findByCursoNomeStartingWithIgnoreCase(nomeCurso));
 	}
 
 	@PostMapping

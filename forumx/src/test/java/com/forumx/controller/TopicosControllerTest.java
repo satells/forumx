@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -17,27 +16,36 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.forumx.base.BaseTest;
 import com.forumx.controller.form.AtualizacaoTopicoForm;
 import com.forumx.controller.form.TopicoForm;
-import com.forumx.repository.CursoRepository;
-import com.forumx.repository.TopicoRepository;
 
 class TopicosControllerTest extends BaseTest {
-
-	@Autowired
-	private TopicoRepository topicoRepository;
-
-	@Autowired
-	private CursoRepository cursoRepository;
 
 	@Test
 	void test_get_withou_parameters() throws Exception {
 
-		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/topicos");
+		MockHttpServletRequestBuilder requestBuilderSemParametro = MockMvcRequestBuilders
 
-		mockMvc.perform(requestBuilder)
+				.get("/topicos")
+
+				.accept("application/json;charset=UTF-8")
+
+				.contentType("application/json;charset=UTF-8");
+
+		;
+		MockHttpServletRequestBuilder requestBuilderComParametro = MockMvcRequestBuilders
+
+				.get("/topicos?nomeCurso=S")
+
+				.accept("application/json;charset=UTF-8")
+
+				.contentType("application/json;charset=UTF-8");
+
+		;
+
+		mockMvc.perform(requestBuilderComParametro)
 
 				.andExpect(status().is2xxSuccessful())
 
-				.andExpect(content().contentType("application/json"))
+				.andExpect(content().contentType("application/json;charset=UTF-8"))
 
 				.andExpect(jsonPath("$", Matchers.notNullValue()))
 
@@ -47,9 +55,25 @@ class TopicosControllerTest extends BaseTest {
 
 				.andExpect(jsonPath("$[0].mensagem", is("Erro ao criar projeto")))
 
-				.andExpect(jsonPath("$[0].dataCriacao", notNullValue()))
-
+				.andExpect(jsonPath("$[0].dataCriacao", notNullValue()));
 		;
+		mockMvc.perform(requestBuilderSemParametro)
+
+				.andExpect(status().is2xxSuccessful())
+
+				.andExpect(content().contentType("application/json;charset=UTF-8"))
+
+				.andExpect(jsonPath("$", Matchers.notNullValue()))
+
+				.andExpect(jsonPath("$[0].id", Matchers.notNullValue()))
+
+				.andExpect(jsonPath("$[0].titulo", is("Dúvida")))
+
+				.andExpect(jsonPath("$[0].mensagem", is("Erro ao criar projeto")))
+
+				.andExpect(jsonPath("$[0].dataCriacao", notNullValue()));
+		;
+
 	}
 
 	@Test
@@ -133,6 +157,15 @@ class TopicosControllerTest extends BaseTest {
 				.contentType("application/json;charset=UTF-8")
 
 		;
+		MockHttpServletRequestBuilder requestBuilderNaoEncontrado = MockMvcRequestBuilders
+
+				.get("/topicos/{id}", -1)
+
+				.accept("application/json;charset=UTF-8")
+
+				.contentType("application/json;charset=UTF-8")
+
+		;
 
 		mockMvc.perform(requestBuilder)
 
@@ -155,6 +188,19 @@ class TopicosControllerTest extends BaseTest {
 				.andExpect(jsonPath("$.status", is("NAO_RESPONDIDO")))
 
 				.andExpect(jsonPath("$.respostas", notNullValue()))
+
+		;
+		mockMvc.perform(requestBuilderNaoEncontrado)
+
+				.andExpect(status().is4xxClientError())
+
+				.andExpect(content().contentType("application/json;charset=UTF-8"))
+
+				.andExpect(jsonPath("$", notNullValue()))
+
+				.andExpect(jsonPath("$.campo", is("Código -1")))
+
+				.andExpect(jsonPath("$.erro", is("Não encontrado")))
 
 		;
 
