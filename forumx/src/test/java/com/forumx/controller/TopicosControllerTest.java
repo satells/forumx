@@ -1,3 +1,4 @@
+
 package com.forumx.controller;
 
 import static org.hamcrest.Matchers.is;
@@ -18,6 +19,42 @@ import com.forumx.controller.form.AtualizacaoTopicoForm;
 import com.forumx.controller.form.TopicoForm;
 
 class TopicosControllerTest extends BaseTest {
+
+	@Test
+	void test_delete() throws Exception {
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+
+				.delete("/topicos/{id}", 3);
+
+		mockMvc.perform(requestBuilder)
+
+				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+
+		;
+
+		MockHttpServletRequestBuilder requestBuilder2 = MockMvcRequestBuilders
+
+				.delete("/topicos/{id}", "789789")
+
+				.accept("application/json")
+
+				.contentType("application/json")
+
+		;
+
+		mockMvc.perform(requestBuilder2)
+
+				.andExpect(MockMvcResultMatchers.status().is(404))
+
+				.andExpect(jsonPath("$", notNullValue()))
+
+				.andExpect(jsonPath("$.campo", is("Código 789789")))
+
+				.andExpect(jsonPath("$.erro", is("Não encontrado")))
+
+		;
+
+	}
 
 	@Test
 	void test_get_withou_parameters() throws Exception {
@@ -184,7 +221,7 @@ class TopicosControllerTest extends BaseTest {
 		;
 		mockMvc.perform(requestBuilderNaoEncontrado)
 
-				.andExpect(status().is4xxClientError())
+				.andExpect(status().is(404))
 
 				.andExpect(content().contentType("application/json;charset=UTF-8"))
 
@@ -205,7 +242,7 @@ class TopicosControllerTest extends BaseTest {
 
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
 
-				.put("/topicos/{id}", 3)
+				.put("/topicos/{id}", 2)
 
 				.accept("application/json")
 
@@ -219,7 +256,7 @@ class TopicosControllerTest extends BaseTest {
 
 				.andExpect(MockMvcResultMatchers.status().isOk())
 
-				.andExpect(jsonPath("$.id", is(3)))
+				.andExpect(jsonPath("$.id", is(2)))
 
 				.andExpect(jsonPath("$.titulo", is("Atualizado")))
 
@@ -229,7 +266,7 @@ class TopicosControllerTest extends BaseTest {
 
 		MockHttpServletRequestBuilder requestBuilder2 = MockMvcRequestBuilders
 
-				.get("/topicos/{id}", 3)
+				.get("/topicos/{id}", 2)
 
 				.accept("application/json")
 
@@ -245,7 +282,7 @@ class TopicosControllerTest extends BaseTest {
 
 				.andExpect(jsonPath("$", notNullValue()))
 
-				.andExpect(jsonPath("$.id", is(3)))
+				.andExpect(jsonPath("$.id", is(2)))
 
 				.andExpect(jsonPath("$.titulo", is("Atualizado")))
 
@@ -258,6 +295,28 @@ class TopicosControllerTest extends BaseTest {
 				.andExpect(jsonPath("$.status", is("NAO_RESPONDIDO")))
 
 				.andExpect(jsonPath("$.respostas", notNullValue()))
+
+		;
+
+		MockHttpServletRequestBuilder requestBuilder3 = MockMvcRequestBuilders
+
+				.put("/topicos/{id}", "456464")
+
+				.accept("application/json")
+
+				.contentType("application/json")
+
+				.content(atualizarTopico);
+
+		mockMvc.perform(requestBuilder3)
+
+				.andExpect(MockMvcResultMatchers.status().is(404))
+
+				.andExpect(jsonPath("$", notNullValue()))
+
+				.andExpect(jsonPath("$.campo", is("Código 456464")))
+
+				.andExpect(jsonPath("$.erro", is("Não encontrado")))
 
 		;
 
