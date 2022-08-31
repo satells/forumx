@@ -55,7 +55,7 @@ class AutenticacaoControllerTest extends BaseTest {
 
 		mockMvc.perform(requestBuilder)
 
-				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
 
 		;
 	}
