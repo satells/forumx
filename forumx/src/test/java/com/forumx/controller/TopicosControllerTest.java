@@ -100,9 +100,9 @@ class TopicosControllerTest extends BaseTest {
 
 				.andExpect(jsonPath("$.content[0].id", Matchers.notNullValue()))
 
-				.andExpect(jsonPath("$.content[0].titulo", is("Dúvida 49")))
+				.andExpect(jsonPath("$.content[0].titulo", is("Dúvida 48")))
 
-				.andExpect(jsonPath("$.content[0].mensagem", is("Projeto não compila 49")))
+				.andExpect(jsonPath("$.content[0].mensagem", is("Projeto não compila 48")))
 
 				.andExpect(jsonPath("$.content[0].dataCriacao", notNullValue()));
 		;
