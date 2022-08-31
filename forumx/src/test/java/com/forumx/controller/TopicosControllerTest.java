@@ -61,14 +61,14 @@ class TopicosControllerTest extends BaseTest {
 
 		MockHttpServletRequestBuilder requestBuilderSemParametro = MockMvcRequestBuilders
 
-				.get("/topicos")
+				.get("/topicos?page=1&size=50&sort=id,asc&sort=dataCriacao,asc")
 
 				.accept("application/json;charset=UTF-8")
 
 		;
 		MockHttpServletRequestBuilder requestBuilderComParametro = MockMvcRequestBuilders
 
-				.get("/topicos?nomeCurso=S")
+				.get("/topicos?nomeCurso=S&page=0&size=50&sort=id,desc")
 
 				.accept("application/json;charset=UTF-8")
 
@@ -82,13 +82,13 @@ class TopicosControllerTest extends BaseTest {
 
 				.andExpect(jsonPath("$", Matchers.notNullValue()))
 
-				.andExpect(jsonPath("$[0].id", Matchers.notNullValue()))
+				.andExpect(jsonPath("$.content[0].id", Matchers.notNullValue()))
 
-				.andExpect(jsonPath("$[0].titulo", is("Dúvida")))
+				.andExpect(jsonPath("$.content[0].titulo", is("Dúvida 1429")))
 
-				.andExpect(jsonPath("$[0].mensagem", is("Erro ao criar projeto")))
+				.andExpect(jsonPath("$.content[0].mensagem", is("Projeto não compila 1429")))
 
-				.andExpect(jsonPath("$[0].dataCriacao", notNullValue()));
+				.andExpect(jsonPath("$.content[0].dataCriacao", notNullValue()));
 		;
 		mockMvc.perform(requestBuilderSemParametro)
 
@@ -98,13 +98,13 @@ class TopicosControllerTest extends BaseTest {
 
 				.andExpect(jsonPath("$", Matchers.notNullValue()))
 
-				.andExpect(jsonPath("$[0].id", Matchers.notNullValue()))
+				.andExpect(jsonPath("$.content[0].id", Matchers.notNullValue()))
 
-				.andExpect(jsonPath("$[0].titulo", is("Dúvida")))
+				.andExpect(jsonPath("$.content[0].titulo", is("Dúvida 49")))
 
-				.andExpect(jsonPath("$[0].mensagem", is("Erro ao criar projeto")))
+				.andExpect(jsonPath("$.content[0].mensagem", is("Projeto não compila 49")))
 
-				.andExpect(jsonPath("$[0].dataCriacao", notNullValue()));
+				.andExpect(jsonPath("$.content[0].dataCriacao", notNullValue()));
 		;
 
 	}
