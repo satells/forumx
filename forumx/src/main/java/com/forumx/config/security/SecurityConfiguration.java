@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.forumx.repository.UsuarioRepository;
 
 //@EnableWebSecurity
 @Configuration
@@ -28,7 +31,12 @@ public class SecurityConfiguration {// extends WebSecurityConfigurerAdapter {
 	 */
 
 	@Autowired
+	private TokenService tokenService;
+	@Autowired
 	private AutenticacaoService autenticacaoService;
+
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -74,6 +82,8 @@ public class SecurityConfiguration {// extends WebSecurityConfigurerAdapter {
 				.sessionManagement()
 
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+				.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class)
 
 		;
 

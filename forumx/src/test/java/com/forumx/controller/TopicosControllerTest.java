@@ -19,12 +19,17 @@ import com.forumx.controller.form.AtualizacaoTopicoForm;
 import com.forumx.controller.form.TopicoForm;
 
 class TopicosControllerTest extends BaseTest {
+	private static final String token = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJBUEkgZG8gRsOzcnVtIFgiLCJzdWIiOiIxIiwiaWF0IjoxNjYxOTcyNzgxLCJleHAiOjE2NjIwNTkxODF9.TPEJSw445qAqVQbl-wP2gQHjBIC2UTN2UAtoXqTgyJnEfs4OoRS7fNA6SObPDFZtHMgQXfdVVr0o6Kkanwv4hQ";
 
 	@Test
 	void test_delete() throws Exception {
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
 
-				.delete("/topicos/{id}", 3);
+				.delete("/topicos/{id}", 3)
+
+				.header("Authorization", "Bearer " + token)
+
+		;
 
 		mockMvc.perform(requestBuilder)
 
@@ -39,6 +44,8 @@ class TopicosControllerTest extends BaseTest {
 				.accept("application/json")
 
 				.contentType("application/json")
+
+				.header("Authorization", "Bearer " + token)
 
 		;
 
@@ -63,12 +70,16 @@ class TopicosControllerTest extends BaseTest {
 
 				.get("/topicos?page=1&size=50&sort=id,asc&sort=dataCriacao,asc")
 
+				.header("Authorization", "Bearer " + token)
+
 				.accept("application/json;charset=UTF-8")
 
 		;
 		MockHttpServletRequestBuilder requestBuilderComParametro = MockMvcRequestBuilders
 
 				.get("/topicos?nomeCurso=S&page=0&size=50&sort=id,desc")
+
+				.header("Authorization", "Bearer " + token)
 
 				.accept("application/json;charset=UTF-8")
 
@@ -100,9 +111,9 @@ class TopicosControllerTest extends BaseTest {
 
 				.andExpect(jsonPath("$.content[0].id", Matchers.notNullValue()))
 
-				.andExpect(jsonPath("$.content[0].titulo", is("Dúvida 48")))
+				.andExpect(jsonPath("$.content[0].titulo", is("Dúvida 49")))
 
-				.andExpect(jsonPath("$.content[0].mensagem", is("Projeto não compila 48")))
+				.andExpect(jsonPath("$.content[0].mensagem", is("Projeto não compila 49")))
 
 				.andExpect(jsonPath("$.content[0].dataCriacao", notNullValue()));
 		;
@@ -120,9 +131,15 @@ class TopicosControllerTest extends BaseTest {
 
 				.accept("application/json")
 
+				.header("Authorization", "Bearer " + token)
+
 				.content(topico)
 
-				.contentType("application/json");
+				.contentType("application/json")
+
+				.header("Authorization", "Bearer " + token)
+
+		;
 
 		mockMvc.perform(requestBuilder)
 
@@ -159,7 +176,11 @@ class TopicosControllerTest extends BaseTest {
 
 				.content(topico)
 
-				.contentType("application/json");
+				.contentType("application/json")
+
+				.header("Authorization", "Bearer " + token)
+
+		;
 
 		;
 
@@ -189,10 +210,14 @@ class TopicosControllerTest extends BaseTest {
 
 				.contentType("application/json;charset=UTF-8")
 
+				.header("Authorization", "Bearer " + token)
+
 		;
 		MockHttpServletRequestBuilder requestBuilderNaoEncontrado = MockMvcRequestBuilders
 
 				.get("/topicos/{id}", -1)
+
+				.header("Authorization", "Bearer " + token)
 
 		;
 
@@ -250,6 +275,8 @@ class TopicosControllerTest extends BaseTest {
 
 				.content(atualizarTopico)
 
+				.header("Authorization", "Bearer " + token)
+
 		;
 
 		mockMvc.perform(requestBuilder)
@@ -271,6 +298,8 @@ class TopicosControllerTest extends BaseTest {
 				.accept("application/json")
 
 				.contentType("application/json")
+
+				.header("Authorization", "Bearer " + token)
 
 		;
 
@@ -306,7 +335,11 @@ class TopicosControllerTest extends BaseTest {
 
 				.contentType("application/json")
 
-				.content(atualizarTopico);
+				.content(atualizarTopico)
+
+				.header("Authorization", "Bearer " + token)
+
+		;
 
 		mockMvc.perform(requestBuilder3)
 

@@ -15,8 +15,6 @@ public class LoginForm {
 	}
 
 	public UsernamePasswordAuthenticationToken converter() {
-		System.out.println(email);
-		System.out.println(senha);
 		return new UsernamePasswordAuthenticationToken(email, senha);
 	}
 

@@ -4,12 +4,16 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
+import javax.crypto.SecretKey;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.forumx.modelo.Usuario;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -23,6 +27,19 @@ public class TokenService {
 
 	@Value("${forumx.jwt.secret}")
 	private String secret;
+
+	public boolean isTokenValido(String token) {
+		try {
+			SecretKey key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+			Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+
+			System.out.println("tudo ok");
+			return true;
+		} catch (Exception e) {
+			System.out.println("tudo falso");
+			return false;
+		}
+	}
 
 	public String gerarToken(Authentication authentication) {
 		Usuario logado = (Usuario) authentication.getPrincipal();
@@ -47,6 +64,14 @@ public class TokenService {
 				.compact()
 
 		;
+	}
+
+	public Long getIdUsuario(String token) {
+		SecretKey key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+		Jws<Claims> jws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+		String subject = jws.getBody().getSubject();
+
+		return Long.parseLong(subject);
 	}
 
 }
