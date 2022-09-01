@@ -32,8 +32,6 @@ public class SecurityConfiguration {// extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private TokenService tokenService;
-	@Autowired
-	private AutenticacaoService autenticacaoService;
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
@@ -74,6 +72,8 @@ public class SecurityConfiguration {// extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/topicos").permitAll()
 
 				.antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
+
+				.antMatchers(HttpMethod.DELETE, "/topicos/*").hasRole("MODERADOR")
 
 				.anyRequest().authenticated()
 

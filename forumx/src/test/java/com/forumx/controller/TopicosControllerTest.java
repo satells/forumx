@@ -19,7 +19,8 @@ import com.forumx.controller.form.AtualizacaoTopicoForm;
 import com.forumx.controller.form.TopicoForm;
 
 class TopicosControllerTest extends BaseTest {
-	private static final String token = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJBUEkgZG8gRsOzcnVtIFgiLCJzdWIiOiIxIiwiaWF0IjoxNjYxOTcyNzgxLCJleHAiOjE2NjIwNTkxODF9.TPEJSw445qAqVQbl-wP2gQHjBIC2UTN2UAtoXqTgyJnEfs4OoRS7fNA6SObPDFZtHMgQXfdVVr0o6Kkanwv4hQ";
+	private static final String TOKEN_USUARIO = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJBUEkgZG8gRsOzcnVtIFgiLCJzdWIiOiIxIiwiaWF0IjoxNjYxOTcyNzgxLCJleHAiOjE2NjIwNTkxODF9.TPEJSw445qAqVQbl-wP2gQHjBIC2UTN2UAtoXqTgyJnEfs4OoRS7fNA6SObPDFZtHMgQXfdVVr0o6Kkanwv4hQ";
+	private static final String TOKEN_MODERADOR = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJBUEkgZG8gRsOzcnVtIFgiLCJzdWIiOiIyIiwiaWF0IjoxNjYxOTk0NjAxLCJleHAiOjE2NjIwODEwMDF9.HGpo0lyI-h_7scBoHTnMGrRcE7XviBhRGIDJ4H0QaYcNnjOEK0Rj0ZNC7r-iI6AKBp7QCgiSrGFV3wGVF338TQ";
 
 	@Test
 	void test_delete() throws Exception {
@@ -27,7 +28,7 @@ class TopicosControllerTest extends BaseTest {
 
 				.delete("/topicos/{id}", 3)
 
-				.header("Authorization", "Bearer " + token)
+				.header("Authorization", "Bearer " + TOKEN_MODERADOR)
 
 		;
 
@@ -45,7 +46,7 @@ class TopicosControllerTest extends BaseTest {
 
 				.contentType("application/json")
 
-				.header("Authorization", "Bearer " + token)
+				.header("Authorization", "Bearer " + TOKEN_MODERADOR)
 
 		;
 
@@ -70,7 +71,7 @@ class TopicosControllerTest extends BaseTest {
 
 				.get("/topicos?page=1&size=50&sort=id,asc&sort=dataCriacao,asc")
 
-				.header("Authorization", "Bearer " + token)
+				.header("Authorization", "Bearer " + TOKEN_USUARIO)
 
 				.accept("application/json;charset=UTF-8")
 
@@ -79,7 +80,7 @@ class TopicosControllerTest extends BaseTest {
 
 				.get("/topicos?nomeCurso=S&page=0&size=50&sort=id,desc")
 
-				.header("Authorization", "Bearer " + token)
+				.header("Authorization", "Bearer " + TOKEN_USUARIO)
 
 				.accept("application/json;charset=UTF-8")
 
@@ -131,13 +132,13 @@ class TopicosControllerTest extends BaseTest {
 
 				.accept("application/json")
 
-				.header("Authorization", "Bearer " + token)
+				.header("Authorization", "Bearer " + TOKEN_USUARIO)
 
 				.content(topico)
 
 				.contentType("application/json")
 
-				.header("Authorization", "Bearer " + token)
+				.header("Authorization", "Bearer " + TOKEN_USUARIO)
 
 		;
 
@@ -178,7 +179,7 @@ class TopicosControllerTest extends BaseTest {
 
 				.contentType("application/json")
 
-				.header("Authorization", "Bearer " + token)
+				.header("Authorization", "Bearer " + TOKEN_USUARIO)
 
 		;
 
@@ -210,14 +211,14 @@ class TopicosControllerTest extends BaseTest {
 
 				.contentType("application/json;charset=UTF-8")
 
-				.header("Authorization", "Bearer " + token)
+				.header("Authorization", "Bearer " + TOKEN_USUARIO)
 
 		;
 		MockHttpServletRequestBuilder requestBuilderNaoEncontrado = MockMvcRequestBuilders
 
 				.get("/topicos/{id}", -1)
 
-				.header("Authorization", "Bearer " + token)
+				.header("Authorization", "Bearer " + TOKEN_USUARIO)
 
 		;
 
@@ -275,7 +276,7 @@ class TopicosControllerTest extends BaseTest {
 
 				.content(atualizarTopico)
 
-				.header("Authorization", "Bearer " + token)
+				.header("Authorization", "Bearer " + TOKEN_USUARIO)
 
 		;
 
@@ -299,7 +300,7 @@ class TopicosControllerTest extends BaseTest {
 
 				.contentType("application/json")
 
-				.header("Authorization", "Bearer " + token)
+				.header("Authorization", "Bearer " + TOKEN_USUARIO)
 
 		;
 
@@ -337,7 +338,7 @@ class TopicosControllerTest extends BaseTest {
 
 				.content(atualizarTopico)
 
-				.header("Authorization", "Bearer " + token)
+				.header("Authorization", "Bearer " + TOKEN_USUARIO)
 
 		;
 

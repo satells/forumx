@@ -23,16 +23,8 @@ class AutenticacaoControllerTest extends BaseTest {
 			return email;
 		}
 
-		public void setEmail(String email) {
-			this.email = email;
-		}
-
 		public String getSenha() {
 			return senha;
-		}
-
-		public void setSenha(String senha) {
-			this.senha = senha;
 		}
 
 	}
@@ -40,7 +32,7 @@ class AutenticacaoControllerTest extends BaseTest {
 	@Test
 	void testLogin() throws Exception {
 
-		String login = new ObjectMapper().writeValueAsString(new UsuarioTeste("aluno@email.com", "123456"));
+		String login = new ObjectMapper().writeValueAsString(new UsuarioTeste("moderador@email.com", "123456"));
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
 
 				.post("/auth")
