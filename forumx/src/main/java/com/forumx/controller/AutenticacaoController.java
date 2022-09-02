@@ -1,5 +1,7 @@
 package com.forumx.controller;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ public class AutenticacaoController {
 		try {
 			System.out.println(form.getEmail());
 			System.out.println(form.getSenha());
+
+			ArrayList<String> arrayList = new ArrayList<String>();
 
 			UsernamePasswordAuthenticationToken dadosLogin = form.converter();
 			Authentication authentication = authenticationManager.authenticate(dadosLogin);
