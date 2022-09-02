@@ -35,7 +35,6 @@ public class AutenticacaoController {
 			System.out.println(form.getEmail());
 			System.out.println(form.getSenha());
 
-			ArrayList<String> arrayList = new ArrayList<String>();
 			UsernamePasswordAuthenticationToken dadosLogin = form.converter();
 			Authentication authentication = authenticationManager.authenticate(dadosLogin);
 
