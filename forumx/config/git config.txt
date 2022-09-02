@@ -1,0 +1,39 @@
+C:\Program Files\Git\usr\bin
+
+
+
+
+
+
+
+C:\Users\home\stu_id_rsa.pub,C:\Users\home\stu_id_rsa
+
+
+C:\Users\home\stu_id_rsa
+
+------------------------------------
+
+Copy ssh to clipboard.
+clip < ~/.ssh/id_rsa.pub
+
+------------------
+
+
+git config --global user.name "satells"
+git config --global user.email "msergiost@hotmail.com"
+git config --list 
+
+
+
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/stu_id_rsa
+ssh -vT git@github.com
+git clone git@github.com:satells/sistema-de-cadastro.git
+
+
+#cat ~/.ssh/stu_id_rsa.pub
+
+#ssh -T git@github.com
+
+#git config --global core.sshCommand "C:\Program\\ Files\Git\usr\bin\ssh.exe"
+
