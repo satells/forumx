@@ -29,7 +29,6 @@ public class AutenticacaoController {
 
 	@PostMapping
 	public ResponseEntity<TokenDto> autenticar(@RequestBody @Valid LoginForm form) {
-		String a = "";
 		try {
 			System.out.println(form.getEmail());
 			System.out.println(form.getSenha());
