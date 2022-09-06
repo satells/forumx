@@ -33,6 +33,7 @@ class AutenticacaoControllerTest extends BaseTest {
 	void testLogin() throws Exception {
 
 		String login = new ObjectMapper().writeValueAsString(new UsuarioTeste("moderador@email.com", "123456"));
+		System.out.println(login);
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
 
 				.post("/auth")
@@ -47,7 +48,7 @@ class AutenticacaoControllerTest extends BaseTest {
 
 		mockMvc.perform(requestBuilder)
 
-				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
 
 		;
 	}

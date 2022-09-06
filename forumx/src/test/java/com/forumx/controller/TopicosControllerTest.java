@@ -19,8 +19,8 @@ import com.forumx.controller.form.AtualizacaoTopicoForm;
 import com.forumx.controller.form.TopicoForm;
 
 class TopicosControllerTest extends BaseTest {
-	private static final String TOKEN_USUARIO = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJBUEkgZG8gRsOzcnVtIFgiLCJzdWIiOiIxIiwiaWF0IjoxNjYxOTcyNzgxLCJleHAiOjE2NjIwNTkxODF9.TPEJSw445qAqVQbl-wP2gQHjBIC2UTN2UAtoXqTgyJnEfs4OoRS7fNA6SObPDFZtHMgQXfdVVr0o6Kkanwv4hQ";
-	private static final String TOKEN_MODERADOR = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJBUEkgZG8gRsOzcnVtIFgiLCJzdWIiOiIyIiwiaWF0IjoxNjYxOTk0NjAxLCJleHAiOjE2NjIwODEwMDF9.HGpo0lyI-h_7scBoHTnMGrRcE7XviBhRGIDJ4H0QaYcNnjOEK0Rj0ZNC7r-iI6AKBp7QCgiSrGFV3wGVF338TQ";
+	private static final String TOKEN_USUARIO = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJBUEkgZG8gRsOzcnVtIFgiLCJzdWIiOiIyIiwiaWF0IjoxNjYyNDY3MzM0LCJleHAiOjE2NjI1NTM3MzR9.X-9sfNno2OSuj6CjsZ2JZxo5r25CSU4IBSgTQBM6iB94CgHUPS-rDcJkbVuyY-xjSmG6eXfLj8fWqXj82AEDkQ";
+	private static final String TOKEN_MODERADOR = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJBUEkgZG8gRsOzcnVtIFgiLCJzdWIiOiIyIiwiaWF0IjoxNjYyNDY3MzM0LCJleHAiOjE2NjI1NTM3MzR9.X-9sfNno2OSuj6CjsZ2JZxo5r25CSU4IBSgTQBM6iB94CgHUPS-rDcJkbVuyY-xjSmG6eXfLj8fWqXj82AEDkQ";
 
 	@Test
 	void test_delete() throws Exception {
@@ -180,8 +180,6 @@ class TopicosControllerTest extends BaseTest {
 				.contentType("application/json")
 
 				.header("Authorization", "Bearer " + TOKEN_USUARIO)
-
-		;
 
 		;
 
