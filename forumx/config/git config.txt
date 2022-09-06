@@ -27,8 +27,9 @@ git config --list
 
 eval $(ssh-agent -s)
 ssh-add ~/.ssh/id_rsa
+
 ssh -vT git@github.com
-git clone git@github.com:satells/sistema-de-cadastro.git
+
 
 
 #cat ~/.ssh/stu_id_rsa.pub
@@ -37,3 +38,34 @@ git clone git@github.com:satells/sistema-de-cadastro.git
 
 #git config --global core.sshCommand "C:\Program\\ Files\Git\usr\bin\ssh.exe"
 
+git log --oneline
+git status
+git commit . -m "Alterado todos os arquivos"
+git restore --source a0c873b app.js
+git restore --source a0c873b .
+
+git pull git@github.com:satells/sistema-de-cadastro.git
+git clone git@github.com:satells/sistema-de-cadastro.git
+
+
+------------------------------------------------
+git log --oneline
+git log -p
+git log --author="user_name"
+git log --since=1.month.ago --until=1.day.ago
+git log --pretty="format:%h %s"
+https://devhints.io/git-log-format
+https://devhints.io/git-log
+https://www.atlassian.com/br/git/tutorials/setting-up-a-repository
+git checkout -b desenvolvimento
+git add contato.html
+git commit -m "Aadicionado e-mail de contato"
+git push origin desenvolvimento
+git merge desenvolvimento
+
+
+git switch main
+git switch desenvolvimento
+
+
+------------------------------------------------
